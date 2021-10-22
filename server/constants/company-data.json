@@ -1,0 +1,90 @@
+[
+    {
+        "company_name": "The Mandalorian",
+        "image": "https://via.placeholder.com/150",
+        "city": "Berlin",
+        "specialities": [
+            "electrical",
+            "flooring",
+            "heating"
+        ]
+    },
+    {
+        "company_name": "Rebels",
+        "image": "https://via.placeholder.com/150",
+        "city": "Berlin",
+        "specialities": [
+            "electrical"
+        ]
+    },
+    {
+        "company_name": "Imperial Excavations",
+        "image": "https://via.placeholder.com/150",
+        "city": "Berlin",
+        "specialities": [
+            "excavation"
+        ]
+    },
+    {
+        "company_name": "Expfal",
+        "image": "https://via.placeholder.com/150",
+        "city": "Frankfurt",
+        "specialities": [
+            "plumbing",
+            "flooring",
+            "heating"
+        ]
+    },
+    {
+        "company_name": "Old School Flooring",
+        "image": "https://via.placeholder.com/150",
+        "city": "Cologne",
+        "specialities": [
+            "flooring"
+        ]
+    },
+    {
+        "company_name": "Waterworks",
+        "image": "https://via.placeholder.com/150",
+        "city": "Berlin",
+        "specialities": [
+            "plumbing"
+        ]
+    },
+    {
+        "company_name": "Jack's Construction",
+        "image": "https://via.placeholder.com/150",
+        "city": "Frankfurt",
+        "specialities": [
+            "excavation",
+            "plumbing"
+        ]
+    },
+    {
+        "company_name": "Col GmbH",
+        "image": "https://via.placeholder.com/150",
+        "city": "Cologne",
+        "specialities": [
+            "electrical",
+            "plumbing",
+            "heating"
+        ]
+    },
+    {
+        "company_name": "Basic Construction Works",
+        "image": "https://via.placeholder.com/150",
+        "city": "Frankfurt",
+        "specialities": [
+            "flooring",
+            "electrical"
+        ]
+    },
+    {
+        "company_name": "Electro Works",
+        "image": "https://via.placeholder.com/150",
+        "city": "Berlin",
+        "specialities": [
+            "electrical"
+        ]
+    }
+]
