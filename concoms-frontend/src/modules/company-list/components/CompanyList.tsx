@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
 import Badge from '@mui/material/Badge';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -119,86 +120,90 @@ export const CompanyList = () => {
 
     return (
         <React.Fragment>
-            <Box mt={3} mb={5} display='flex' justifyContent='center' px={3}>
-                <Typography variant='h4'>
-                    Construction Companies
-                </Typography>
-            </Box>
-            <Box
-                display='flex'
-                justifyContent='center'
-                alignItems='center'
-                my={4}
-                p={4}
-            >
-                <Box mx={5}>
-                    <TextField
-                        placeholder="Search for a company name"
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SearchOutlinedIcon />
-                                </InputAdornment>
-                            )
-                        }}
-                        variant="outlined"
-                        className={classes.searchInput}
-                        onChange={handleSearchChange}
-
-                    />
+            <Grid container flexDirection='column' lg={12}>
+                <Box mt={3} mb={5} px={3} display='flex' justifyContent='center'>
+                    <Typography variant='h4'>
+                        Construction Companies
+                    </Typography>
                 </Box>
-                <Box mx={5} className={classes.filterButtonContainer}>
-                    <Badge variant="dot" invisible={!!!specialitiesSelected.length}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        color='info'
-                    >
-                        <ToggleButton
-                            value="check"
-                            selected={isFilterButtonToggled}
-                            onChange={() => setIsFilterButtonToggled(!isFilterButtonToggled)}
-                            color='primary'
-                        >
-                            <FilterAltOutlinedIcon />
-                        </ToggleButton>
-                    </Badge>
-                </Box>
-            </Box>
-            {
-                isFilterButtonToggled && (
-                    <Box mt={2} mb={4} display='flex' justifyContent='center'>
-                        {
-                            ['excavation', 'plumbing', 'flooring', 'heating', 'electrical'].map((speciality) => {
-                                const chipIcon = getIconForSpeciality(speciality);
+                <Grid
+                    container
+                    display='flex'
+                    flexDirection='row'
+                    justifyContent='center'
+                    alignItems='flex-start'
+                    my={4}
+                >
+                    <Box mx={3}>
+                        <TextField
+                            placeholder="Search for a company name"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <SearchOutlinedIcon />
+                                    </InputAdornment>
+                                )
+                            }}
+                            variant="outlined"
+                            className={classes.searchInput}
+                            onChange={handleSearchChange}
 
-                                return (
-                                    <Box mr={1}>
-                                        <Chip
-                                            icon={chipIcon}
-                                            label={speciality}
-                                            size='small'
-                                            color='info'
-                                            variant={isFilterSelected(speciality) ? 'filled' : 'outlined'}
-                                            onClick={handleChipClick}
-                                        />
-                                    </Box>
-                                );
-                            })
-                        }
+                        />
                     </Box>
-                )
-            }
-            <Box mt={4}>
+                    <Box mx={3} className={classes.filterButtonContainer}>
+                        <Badge variant="dot" invisible={!!!specialitiesSelected.length}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            color='info'
+                        >
+                            <ToggleButton
+                                value="check"
+                                selected={isFilterButtonToggled}
+                                onChange={() => setIsFilterButtonToggled(!isFilterButtonToggled)}
+                                color='primary'
+                            >
+                                <FilterAltOutlinedIcon />
+                            </ToggleButton>
+                        </Badge>
+                    </Box>
+                </Grid>
                 {
-                    filteredCompaniesList?.length && (
-                        filteredCompaniesList.map((company: Company) => {
-                            return <CompanyCard company={company} />;
-                        })
+                    isFilterButtonToggled && (
+                        <Grid container mb={7} display='flex' justifyContent='center' px={2}>
+                            {
+                                ['excavation', 'plumbing', 'flooring', 'heating', 'electrical'].map((speciality) => {
+                                    const chipIcon = getIconForSpeciality(speciality);
+
+                                    return (
+                                        <Box mr={1} mt={1}>
+                                            <Chip
+                                                icon={chipIcon}
+                                                label={speciality}
+                                                size='medium'
+                                                color='info'
+                                                variant={isFilterSelected(speciality) ? 'filled' : 'outlined'}
+                                                onClick={handleChipClick}
+                                            />
+                                        </Box>
+                                    );
+                                })
+                            }
+                        </Grid>
                     )
                 }
-            </Box>
+                <Box mt={4}>
+                    {
+                        filteredCompaniesList?.length && (
+                            filteredCompaniesList.map((company: Company) => {
+                                return <CompanyCard company={company} />;
+                            })
+                        )
+                    }
+                </Box>
+            </Grid>
+
         </React.Fragment>
     );
 }

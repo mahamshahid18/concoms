@@ -69,6 +69,7 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                 xs={10}
                 md={10}
                 lg={8}
+                xl={7}
                 spacing={2}
                 className={classes.container}
             >
