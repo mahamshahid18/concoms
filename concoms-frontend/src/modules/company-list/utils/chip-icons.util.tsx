@@ -6,17 +6,19 @@ import CarpenterOutlinedIcon from '@mui/icons-material/CarpenterOutlined';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import BatteryCharging60OutlinedIcon from '@mui/icons-material/BatteryCharging60Outlined';
 
-export const getIconForSpeciality = (speciality: string): React.ReactElement => {
+import { Speciality } from "../../shared";
+
+export const getIconForSpeciality = (speciality: Speciality): React.ReactElement => {
     switch (speciality) {
-        case 'plumbing':
+        case Speciality.Plumbing:
             return <BathtubOutlinedIcon />;
-        case 'heating':
+        case Speciality.Heating:
             return <AirOutlinedIcon />;
-        case 'flooring':
+        case Speciality.Flooring:
             return <CarpenterOutlinedIcon />;
-        case 'electrical':
+        case Speciality.Electrical:
             return <BatteryCharging60OutlinedIcon />;
-        case 'excavation':
+        case Speciality.Excavation:
             return <ConstructionOutlinedIcon />;
         default:
             return <ConstructionOutlinedIcon />;

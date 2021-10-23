@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -6,10 +6,9 @@ import Chip from '@mui/material/Chip';
 import { makeStyles } from '@mui/styles';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
-import { Company } from '../../../types';
 import { getIconForSpeciality } from '..';
+import { Company, Speciality } from '../../shared/types';
 
 interface Props {
     company: Company;
@@ -100,7 +99,7 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                     </Box>
                     <Box mt={3} display='flex'>
                         {
-                            specialities.map((speciality: string) => {
+                            specialities.map((speciality: Speciality) => {
                                 const chipIcon = getIconForSpeciality(speciality);
 
                                 return (

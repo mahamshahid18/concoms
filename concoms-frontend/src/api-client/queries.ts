@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Company } from "../types";
+import { Company } from "../modules/shared/types";
 
 const url = `http://localhost:3000/companies`;
 

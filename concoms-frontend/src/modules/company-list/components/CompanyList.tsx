@@ -14,10 +14,10 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
 import { CompanyCard } from '.';
-import { Company } from '../../../types';
 import { getIconForSpeciality } from '..';
+import { Company } from '../../shared/types';
 import { useGetCompanies } from '../../../api-client';
-import { CardSkeletonLoader, FeedbackMessage } from '../../shared';
+import { availableSpecialities, CardSkeletonLoader, FeedbackMessage } from '../../shared';
 
 
 const useStyles = makeStyles({
@@ -173,7 +173,7 @@ export const CompanyList = () => {
                     isFilterButtonToggled && (
                         <Grid container mb={7} display='flex' justifyContent='center' px={2}>
                             {
-                                ['excavation', 'plumbing', 'flooring', 'heating', 'electrical'].map((speciality) => {
+                                availableSpecialities.map((speciality) => {
                                     const chipIcon = getIconForSpeciality(speciality);
 
                                     return (
@@ -203,7 +203,6 @@ export const CompanyList = () => {
                     }
                 </Box>
             </Grid>
-
         </React.Fragment>
     );
 }
