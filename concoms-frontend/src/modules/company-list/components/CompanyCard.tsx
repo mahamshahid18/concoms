@@ -9,6 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import { Company } from '../../../types';
+import { getIconForSpeciality } from '..';
 
 interface Props {
     company: Company;
@@ -99,9 +100,11 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                     <Box mt={3} display='flex'>
                         {
                             specialities.map((speciality: string) => {
+                                const chipIcon = getIconForSpeciality(speciality);
+
                                 return (
                                     <Box mr={1}>
-                                        <Chip icon={<ControlPointIcon />} label={speciality} size='small' color='info' />
+                                        <Chip icon={chipIcon} label={speciality} size='small' color='info' />
                                     </Box>
                                 )
                             })
