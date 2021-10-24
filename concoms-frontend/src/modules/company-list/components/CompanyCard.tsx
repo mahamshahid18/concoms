@@ -7,7 +7,7 @@ import { makeStyles } from '@mui/styles';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-import { getIconForSpeciality } from '..';
+import { SpecialityChipIcon } from '..';
 import { Company, Speciality } from '../../shared/types';
 
 interface Props {
@@ -73,7 +73,7 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                 className={classes.container}
             >
                 <Grid container direction='column' xs={12} md={2} lg={2}>
-                    <img className={classes.logoImage} src={image} />
+                    <img alt='company-logo' className={classes.logoImage} src={image} />
                 </Grid>
                 <Grid
                     container
@@ -99,12 +99,10 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                     </Box>
                     <Box mt={3} display='flex'>
                         {
-                            specialities.map((speciality: Speciality) => {
-                                const chipIcon = getIconForSpeciality(speciality);
-
+                            specialities.map((speciality: Speciality, index: number) => {
                                 return (
-                                    <Box mr={1}>
-                                        <Chip icon={chipIcon} label={speciality} size='small' color='info' />
+                                    <Box mr={1} key={index}>
+                                        <Chip icon={<SpecialityChipIcon speciality={speciality} />} label={speciality} size='small' color='info' />
                                     </Box>
                                 )
                             })

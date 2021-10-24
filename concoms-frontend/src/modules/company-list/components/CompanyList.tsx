@@ -13,8 +13,7 @@ import { makeStyles } from '@mui/styles';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
-import { CompanyCard } from '.';
-import { getIconForSpeciality } from '..';
+import { CompanyCard, SpecialityChipIcon } from '.';
 import { Company } from '../../shared/types';
 import { useGetCompanies } from '../../../api-client';
 import { availableSpecialities, CardSkeletonLoader, FeedbackMessage } from '../../shared';
@@ -51,9 +50,9 @@ export const CompanyList = () => {
 
             for (let company of companiesList as Company[]) {
                 for (let speciality of specialitiesSelected) {
-                    const companySpecialitiesString = company?.specialities.toString();
+                    const companySpecialitiesString = company?.specialities?.toString();
 
-                    if (companySpecialitiesString.includes(speciality)) {
+                    if (companySpecialitiesString?.includes(speciality)) {
                         companiesMatchingFiltersSelected.push(company);
                         break;
                     }
@@ -99,9 +98,9 @@ export const CompanyList = () => {
         return (
             <Box mt={4}>
                 {
-                    [1, 2, 3, 4, 5, 6].map(() => {
+                    [1, 2, 3, 4, 5, 6].map((_, index) => {
                         return (
-                            <CardSkeletonLoader />
+                            <CardSkeletonLoader key={index} />
                         )
                     })
 
@@ -173,13 +172,11 @@ export const CompanyList = () => {
                     isFilterButtonToggled && (
                         <Grid container mb={7} display='flex' justifyContent='center' px={2}>
                             {
-                                availableSpecialities.map((speciality) => {
-                                    const chipIcon = getIconForSpeciality(speciality);
-
+                                availableSpecialities.map((speciality, index) => {
                                     return (
-                                        <Box mr={1} mt={1}>
+                                        <Box mr={1} mt={1} key={index}>
                                             <Chip
-                                                icon={chipIcon}
+                                                icon={<SpecialityChipIcon speciality={speciality} />}
                                                 label={speciality}
                                                 size='medium'
                                                 color='info'
@@ -196,8 +193,8 @@ export const CompanyList = () => {
                 <Box mt={4}>
                     {
                         filteredCompaniesList?.length && (
-                            filteredCompaniesList.map((company: Company) => {
-                                return <CompanyCard company={company} />;
+                            filteredCompaniesList.map((company: Company, index: number) => {
+                                return <CompanyCard key={index} company={company} />;
                             })
                         )
                     }

@@ -9,7 +9,7 @@ export const useGetCompanies = () => {
         async () => {
             const response: Response = await fetch(url);
             const data: Company[] = await response.json();
-            console.log(data);
+
             return data;
         },
         {
