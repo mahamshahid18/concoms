@@ -23,7 +23,7 @@ export const arrangeCompaniesInBucketsOfSpecialities = (companiesList: Company[]
 }
 
 export const getCompaniesWithSelectedSpeciality = (selectedSpecialities: Speciality[], bucketOfSpecialitiesMap: Map<Speciality, Company[]>): Company[] => {
-    if (!bucketOfSpecialitiesMap) {
+    if (!bucketOfSpecialitiesMap || !!!bucketOfSpecialitiesMap.size) {
         return [];
     }
 
