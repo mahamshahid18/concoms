@@ -41,20 +41,26 @@ Navigate to the project folder titled `concoms-frontend`. Run `npm i` to install
 The frontend part of the application has been implemented in a way that making changes to small parts of the application or to the UI would not require a major refactor. I tried to keep the UI simple and the implementation also straight-forward yet easy to change. The UI is split into small components where each component is responsible for layout of a specific item (for example, we have a component `CompanyList`  which does the API call and rendering logic and just passes the required data to `CompanyCard`  component to take care of the layout and UI specific details of each block on the list view).
 Similarly, for future feature additions, similar principles can be kept in mind to split the UI into smaller, managable components where each component is responsible for one topic. What does one topic mean: we can take a look at the folder structure for this. We have a `modules` folder and each related part of the application is grouped as one module. So, similar parts of the UI can exist together as one module - separated into small components which are easy to understand and modify for the future.  
 
-
 In this project, there wasn't a need to specify color theming etc. But for a production app, styles and themes can be defined in one central place and can be used in the app. So, if the company is following a design-systems approach and have the brand theme defined, that theme can easily be utilized to make sure UI wise, everything looks consistent and good.
+
+### Accessibility
+The project can be made more accessible by adding ARIA attributes to allow people with disabilities or people using screen readers to access the UI more easily
+
+### Backend <=> Frontend case conversion
+Currently, the server uses snake_case notation for defining the structure of the response (of the JSON structure for list of companies). The frontend part uses camelCase notation but for handling and accessing the structure of company details (like `company_name`), snake_case is being used on the frontend for ease of use. This situation can be improved by using a middleware which can convert between the two cases on backend and frontend respectively so that both parts of the project can use the case that they need without having to worry about case conversions or trying to access the wrong property (because of wrong case convention being used).
 
 ### Pagination / Infinite scroll
 Currently, the application does not have any kind of pagination available. Which means that if there are 100 items returned from the server then the frontend waits for those 100 items to load and then the UI becomes available. This would not be ideal as this would slow down the app quite a bit. Therefore, as an improvement - pagination can be implemented on both the frontend and backend parts to improve the performance of the app. Other than pagination, infinite scroll can also be implemented to improve the performance of the frontend.
 
 However, keeping in mind these constraints, I did add some loading and error states to show on the UI that data is being fetched so that UI does not look weird, blank and odd and the user can see something and knows that they have to wait for the data to be fetched.
 
+
 ### Testing
 A simple component test is available in the project - which checks for the rendering of the correct icon (inside the Chip component for speciality of a company). Similar approach can be used to test the remaining components. So, the components can be tested for rendering of the correct number of elements (such as 10 items in the CompanyList, checking for 5 items to be present in the filter options). Furthermore, some user interactions can be tested as well. Such as, when the user types specific terms in the search bar, we can test and check that the expected results (of companies) is being rendered.  
 
-On top of the component tests, any utils being used in the project can also be covered with unit tests. For this project however, there weren't many utils being used that felt extremely breakable or necessary to test (for a test app - for production, all utils should be covered).  
+Other than the component tests, any utils being used in the project should also be covered with unit tests. For this project, some basic unit tests have been added for the utils being used.
 
-To ensure that the whole app is working, some very basic integration tests can be added (using something like Cypress). What I would do in this case would be to write tests for each page to make sure that all pages are rendering. This would ensure that the app doesn't break even if new changes are made as all the pages would be checked for rendering errors (of course, correctness of the UI, data needs to still be checked using component tests).
+To ensure that the whole app is working, some very basic integration tests can be added (using something like Cypress). What I would do in this case would be to write tests for each page to make sure that all pages are rendering. This would ensure that the app doesn't break even if new changes are made as all the pages would be checked for rendering errors (of course, correctness of the UI and data still needs to be checked using component tests).
 
 ### Caching
 We are using a json source for getting information about the list of companies within this project. However, in a proper production application, this data should come from the database. Caching can be implemented in this case with some sort of in-memory storage (like Redis) so that the backend does not access the same data multiple times on each GET call (as it could be accessed multiple times each second and without caching, the performance of the server would be slow).
