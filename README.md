@@ -75,4 +75,4 @@ Both the frontend, as well as the backend parts of this project can be packaged 
 Containerizing could also help with the scaling of the application - if needed - by increasing the number of pods which are hosting our containers and creating more duplicates to make sure services are still running.
 
 ## Demo
-You can find a demo of the project over here: []()
+You can find a demo of the project over here: [https://www.loom.com/share/50c92ad111bc45eebee3197f15b139ec](https://www.loom.com/share/50c92ad111bc45eebee3197f15b139ec)
