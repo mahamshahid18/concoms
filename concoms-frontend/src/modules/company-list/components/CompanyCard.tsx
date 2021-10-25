@@ -15,24 +15,18 @@ interface Props {
 }
 
 const useStyles = makeStyles({
-    container: {
+    companyCardContainer: {
         display: 'flex',
         marginTop: '2.5rem',
         marginBottom: '2.5rem',
         backgroundColor: 'white',
         boxShadow: '0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12)',
-        borderRadius: '4px',
+        borderRadius: '0.25rem',
         padding: '1rem 1rem',
 
         '&:hover': {
             backgroundColor: '#F7F6F2'
         }
-    },
-    overflowEllipsis: {
-        maxWidth: '75vw',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis'
     },
     companyName: {
         fontSize: '1.25rem',
@@ -64,18 +58,20 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
     return (
         <Grid container justifyContent='center'>
             <Grid
-                container
+                item
                 xs={10}
                 md={10}
                 lg={8}
                 xl={7}
-                spacing={2}
-                className={classes.container}
+                container
+                className={classes.companyCardContainer}
+                my={3}
             >
-                <Grid container direction='column' xs={12} md={2} lg={2}>
+                <Grid item container direction='column' xs={12} md={2} lg={2}>
                     <img alt='company-logo' className={classes.logoImage} src={image} />
                 </Grid>
                 <Grid
+                    item
                     container
                     direction='column'
                     xs={12}
@@ -97,11 +93,11 @@ export const CompanyCard = ({ company: { company_name, image, city, specialities
                             </span>
                         </Box>
                     </Box>
-                    <Box mt={3} display='flex'>
+                    <Box mt={3} display='flex' flexWrap='wrap'>
                         {
                             specialities.map((speciality: Speciality, index: number) => {
                                 return (
-                                    <Box mr={1} key={index}>
+                                    <Box mr={1} mt={1} key={index}>
                                         <Chip icon={<SpecialityChipIcon speciality={speciality} />} label={speciality} size='small' color='info' />
                                     </Box>
                                 )

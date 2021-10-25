@@ -15,9 +15,8 @@ export interface Props {
 
 const useStyles = makeStyles({
     iconContainer: {
-        paddingTop: '15px',
-        paddingBottom: '15px',
-        paddingRight: '5px',
+        paddingTop: '16px',
+        paddingBottom: '14px',
         paddingLeft: '5px'
     },
 });
