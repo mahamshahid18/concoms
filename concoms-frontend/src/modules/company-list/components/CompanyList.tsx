@@ -14,9 +14,10 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 
 import { CompanyCard, SpecialityChipIcon } from '.';
-import { Company } from '../../shared/types';
+import { Company, Speciality } from '../../shared/types';
 import { useGetCompanies } from '../../../api-client';
 import { availableSpecialities, CardSkeletonLoader, FeedbackMessage } from '../../shared';
+import { arrangeCompaniesInBucketsOfSpecialities, getCompaniesWithSelectedSpeciality } from '..';
 
 
 const useStyles = makeStyles({
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     },
     filterButtonContainer: {
         backgroundColor: 'white',
-        borderRadius: '0.25rem'
+        borderRadius: '50%',
     }
 });
 
@@ -39,40 +40,29 @@ export const CompanyList = () => {
     const [specialitiesSelected, setSpecialitiesSelected] = useState<string[]>([]);
     const [isFilterButtonToggled, setIsFilterButtonToggled] = useState<boolean>(false);
     const [filteredCompaniesList, setFilteredCompaniesList] = useState<Company[]>([]);
+    const [bucketOfSpecialitiesMap, setBucketOfSpecialitiesMap] = useState<Map<Speciality, Company[]>>(new Map());
 
     useEffect(() => {
-        setFilteredCompaniesList(companiesList as Company[]);
+        if (companiesList) {
+            setFilteredCompaniesList(companiesList as Company[]);
+            setBucketOfSpecialitiesMap(arrangeCompaniesInBucketsOfSpecialities(companiesList));
+        }
     }, [companiesList]);
 
     useEffect(() => {
         if (companiesList) {
-            const companiesMatchingFiltersSelected: Company[] = [];
-
-            for (let company of companiesList as Company[]) {
-                for (let speciality of specialitiesSelected) {
-                    const companySpecialitiesString = company?.specialities?.toString();
-
-                    if (companySpecialitiesString?.includes(speciality)) {
-                        companiesMatchingFiltersSelected.push(company);
-                        break;
-                    }
-                }
-            }
-
-            setFilteredCompaniesList(companiesMatchingFiltersSelected.length ? companiesMatchingFiltersSelected as Company[] : companiesList);
+            const companiesMatchingFiltersSelected: Company[] = getCompaniesWithSelectedSpeciality(specialitiesSelected as Speciality[], bucketOfSpecialitiesMap);
+            setFilteredCompaniesList(!!companiesMatchingFiltersSelected.length ? companiesMatchingFiltersSelected as Company[] : companiesList);
         }
     }, [specialitiesSelected]);
 
     useEffect(() => {
         const companiesMatchingSearchTerm = companiesList?.filter((company: Company) => company?.company_name.toLowerCase().includes(searchTerm));
-
         setFilteredCompaniesList(companiesMatchingSearchTerm as Company[]);
     }, [searchTerm]);
 
 
-    const handleChipClick = (event: any) => {
-        const optionClicked = event.target.textContent;
-
+    const handleFilterOptionClick = (optionClicked: Speciality) => {
         if (specialitiesSelected.includes(optionClicked)) {
             setSpecialitiesSelected(specialitiesSelected.filter(option => option !== optionClicked));
         } else {
@@ -94,6 +84,7 @@ export const CompanyList = () => {
     };
 
 
+    // Loader UI for when the data is being fetched
     if (isLoading) {
         return (
             <Box mt={4}>
@@ -109,7 +100,8 @@ export const CompanyList = () => {
         )
     }
 
-    if (isError && !filteredCompaniesList) {
+    // Error state UI if there's an error fetching data from the backend
+    if (isError && !companiesList) {
         return (
             <Box mt={4}>
                 <FeedbackMessage message='Error fetching data :(' />
@@ -119,9 +111,9 @@ export const CompanyList = () => {
 
     return (
         <React.Fragment>
-            <Grid container flexDirection='column' lg={12}>
+            <Grid container flexDirection='column'>
                 <Box mt={3} mb={5} px={3} display='flex' justifyContent='center'>
-                    <Typography variant='h4'>
+                    <Typography variant='h4' textAlign='center'>
                         Construction Companies
                     </Typography>
                 </Box>
@@ -130,12 +122,13 @@ export const CompanyList = () => {
                     display='flex'
                     flexDirection='row'
                     justifyContent='center'
-                    alignItems='flex-start'
+                    alignItems='center'
+                    flexWrap='nowrap'
                     my={4}
                 >
                     <Box mx={3}>
                         <TextField
-                            placeholder="Search for a company name"
+                            placeholder="Search by company name"
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -156,6 +149,7 @@ export const CompanyList = () => {
                                 horizontal: 'right',
                             }}
                             color='info'
+                            overlap='circular'
                         >
                             <ToggleButton
                                 value="check"
@@ -181,7 +175,7 @@ export const CompanyList = () => {
                                                 size='medium'
                                                 color='info'
                                                 variant={isFilterSelected(speciality) ? 'filled' : 'outlined'}
-                                                onClick={handleChipClick}
+                                                onClick={() => handleFilterOptionClick(speciality)}
                                             />
                                         </Box>
                                     );
